@@ -86,14 +86,32 @@ $configurator->createRobotLoader()
 	->register();
 \--
 
+Konfigurace aplikace
+====================
+
+Konfigurace se obykle zapisuje v NEON souboru. Se syntaxí si můžete pohrát na stránce http://ne-on.org. V aplikaci máme standardně dva konfigurační soubory - `config.neon`, kam zapisujeme konfiguraci aplikace, která je nezávislá na prostředí a `config.local.neon`, kam zapisujeme například přístupové údaje k databázi. `config.local.neon` soubor není pod správou verzovacího systému (Git). Oba soubory najdeme defaultně v adresáři `app/config`.
+
+Konfigurační soubor je rozdělen do několika sekcí - [parameters |#parametry], [services |#vlastni-sluzby], extensions a poté následují konfigurace jednotlivých [rozšíření |di-extensions], kde také [konfigurujeme samotný framework |#konfigurace-frameworku].
+
+Parametry
+---------
+V této sekci specifikujeme parametry, na které se můžeme odkazovat v jiné části konfiguračního souboru. Parametry můžeme i zanořovat:
+
+/--code neon
+parameters:
+	imageDir: %wwwDir%/images
+	mail:
+		recipient: info@company.com
+services:
+	- ImageService(%imageDir%)
+	- MailFactory(%mail.recipient%)
+\--
 
 
 Konfigurace frameworku
 ======================
 
-Konfigurace se obykle zapisuje v NEON souboru. Se syntaxí si můžete pohrát na stránce http://ne-on.org.
-
-Většinu parametrů Nette Frameworku lze nyní ovlivnit pomocí konfiguračního souboru.
+Některé parametry Nette Frameworku lze ovlivnit pomocí konfiguračního souboru.
 
 
 Sessions

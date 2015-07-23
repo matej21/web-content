@@ -89,11 +89,30 @@ $configurator->createRobotLoader()
 \--
 
 
+Application configuration
+*************************
+
+Configuration is usually written in NEON format. Have fun trying out the syntax at http://ne-on.org. In our application there are usually at least two configuration files - `config.neon`, where we write configuration, which doesn't depend on the environment, and the `config.local.neon` file which we use to store database credentials etc. `config.local.neon` should not be managed by version control system (Git). We can find those files in the `app/config` directory.
+
+Configuration file is splitted into several sections - [parameters |#parameters], [services |#custom-services], extensions and sections for configuration of individual extensions, which includes [framework configuration |#framework-configuration] itself.
+
+Parameters
+---------
+In this section we can define parameters we can refer to later in the config file. Parameters can also be nested:
+
+/--code neon
+parameters:
+	imageDir: %wwwDir%/images
+	mail:
+		recipient: info@company.com
+services:
+	- ImageService(%imageDir%)
+	- MailFactory(%mail.recipient%)
+\--
 
 Framework configuration
 ***********************
 
-Configuration is usually written in NEON format. Have fun trying out the syntax at http://ne-on.org.
 Many features of Nette Framework can be set up in configuration file.
 
 
